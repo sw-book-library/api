@@ -19,6 +19,8 @@ module.exports = database.sequelize.define('Books', {
     active: Sequelize.BOOLEAN,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
+    code: Sequelize.INTEGER,
+    publishingCompany: Sequelize.STRING,
 }, {
     modelName: "Books",
     updatedAt: 'updatedAt',

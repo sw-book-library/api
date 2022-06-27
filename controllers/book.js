@@ -41,6 +41,8 @@ exports.create = async (req, res) => {
             author: req.body.author,
             description: req.body.description,
             category: req.body.category,
+            publishingCompany: req.body.publishingCompany,
+            code: req.body.code,
             active: true,
         });
         res.json(newBook);
@@ -70,6 +72,12 @@ exports.update = async (req, res) => {
       }
       if (!!req.body.active) {
           payload.active = req.body.active;
+      }
+      if (!!req.body.publishingCompany) {
+          payload.publishingCompany = req.body.publishingCompany;
+      }
+      if (!!req.body.code) {
+          payload.code = req.body.code;
       }
 
       const updatedBook = await Book.update(payload, {
