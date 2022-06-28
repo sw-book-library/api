@@ -32,6 +32,25 @@ exports.findOne = async (req, res) => {
     }
 };
 
+//GET: Search books by code receive.
+exports.findByCode = async (req, res) => {
+    const { code } = req.params;
+    try {
+        const book = await Book.findOne({ 
+            where: { code } 
+        });
+
+        if (!!book) {
+            res.json(book);
+        } else {
+            res.status(404).json({ error: "Book not found." })
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+};
+
 //POST: Insert a book.
 exports.create = async (req, res) => {
     try {
