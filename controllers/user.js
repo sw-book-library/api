@@ -11,13 +11,31 @@ exports.findAll = async (req, res) => {
     }
 };
 
-
 //GET: Search books by id receive.
 exports.findOne = async (req, res) => {
     const { id } = req.params;
     try {
         const user = await User.findOne({ 
             where: { id } 
+        });
+
+        if (!!user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ error: "User not found." })
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+};
+
+//GET: Search books by registration receive.
+exports.findByRegistration = async (req, res) => {
+    const { registration } = req.params;
+    try {
+        const user = await User.findOne({ 
+            where: { registration } 
         });
 
         if (!!user) {
