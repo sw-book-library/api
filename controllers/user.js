@@ -94,7 +94,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     const { id } = req.params;
     try {
-        const deletedUser = await User.deleteOne({
+        const deletedUser = await User.destroy({
             where: {
                 id,
             },
