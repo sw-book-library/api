@@ -8,7 +8,5 @@ router.get("/registration/:registration", userController.findByRegistration);
 router.post("/", userController.create);
 router.put("/:id", userController.update);
 router.delete("/:id", userController.delete);
-//router.post("/login", userController.checkLogin);
-//router.put("/changePassword/:id", userController.changePassword);
 
 module.exports = router;  

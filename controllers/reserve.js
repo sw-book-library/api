@@ -21,9 +21,7 @@ exports.findByUserOrBook = async (req, res) => {
 
         if (bookId != 'null' || !bookId) where.bookId = bookId;
         if (userId != 'null' || !userId) where.userId = userId;
-        
-        console.log(where);
-        
+                
         const reserves = await Reserve.findAll({
             where
         });
