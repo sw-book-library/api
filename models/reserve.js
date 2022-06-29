@@ -17,8 +17,20 @@ module.exports = database.sequelize.define('Reserves', {
     returnDate: {
         type: Sequelize.DATE,
     },
-    bookId: Sequelize.INTEGER,
-    userId: Sequelize.INTEGER,
+    bookId: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'Books',
+            key: 'id'
+        }
+    },
+    userId: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+    },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
 }, {

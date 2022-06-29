@@ -11,16 +11,25 @@ exports.findAll = async (req, res) => {
 };
 
 
-//GET: Search reserves by id receive.
-exports.findOne = async (req, res) => {
-    const { id } = req.params;
+
+//GET: Search by user or book.
+exports.findByUserOrBook = async (req, res) => {
+    const { bookId, userId } = req.params;
+
     try {
-        const reserve = await Reserve.findOne({ 
-            where: { id } 
+        const where = {};
+
+        if (bookId != 'null' || !bookId) where.bookId = bookId;
+        if (userId != 'null' || !userId) where.userId = userId;
+        
+        console.log(where);
+        
+        const reserves = await Reserve.findAll({
+            where
         });
 
-        if (!!reserve) {
-            res.json(reserve);
+        if (!!reserves) {
+            res.status(200).json(reserves);
         } else {
             res.status(404).json({ error: "Reserve not found." })
         }
