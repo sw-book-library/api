@@ -1,28 +1,45 @@
-const Sequelize = require('sequelize');
-const database = require('../db');
+"use strict";
 
-module.exports = database.sequelize.define('Books', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    title: {
-        type: Sequelize.STRING,
-        required: true,
-    },
-    productionYear: Sequelize.STRING,
-    author: Sequelize.STRING,
-    description: Sequelize.STRING,
-    category: Sequelize.STRING,
-    active: Sequelize.BOOLEAN,
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
-    code: Sequelize.INTEGER,
-    publishingCompany: Sequelize.STRING,
-}, {
-    modelName: "Books",
-    updatedAt: 'updatedAt',
-    createdAt: 'createdAt',
-});
+const { Model } = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+    class Book extends Model {
+        static associate(models) {
+            models.Book.hasMany(models.Reserve, {
+                foreignKey: "bookId",
+            });
+        }
+    }
+
+    Book.init(
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                allowNull: false,
+                primaryKey: true
+            },
+            title: {
+                type: DataTypes.STRING,
+                required: true,
+            },
+            productionYear: DataTypes.STRING,
+            author: DataTypes.STRING,
+            description: DataTypes.STRING,
+            category: DataTypes.STRING,
+            active: DataTypes.BOOLEAN,
+            createdAt: DataTypes.DATE,
+            updatedAt: DataTypes.DATE,
+            code: DataTypes.INTEGER,
+            publishingCompany: DataTypes.STRING,
+        },
+        {
+            sequelize,
+            modelName: "Book",
+            updatedAt: 'updatedAt',
+            createdAt: 'createdAt',
+        }
+    );
+
+    return Book;
+};

@@ -1,56 +1,51 @@
-const Sequelize = require('sequelize');
-const database = require('../db');
+"use strict";
 
-module.exports = database.sequelize.define('Reserves', {
-    id: {
-        type: Sequelize.INTEGER,
+const { Model } = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+  class Reserve extends Model {
+    static associate(models) {
+      models.Reserve.belongsTo(models.Book, {
+        foreignKey: "bookId",
+      });
+      models.Reserve.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+    }
+  }
+
+  Reserve.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        primaryKey: true
-    },
-    scheduledDate: {
-        type: Sequelize.DATE,
+        primaryKey: true,
+      },
+      scheduledDate: {
+        type: DataTypes.DATE,
         allowNull: true,
-        default: Date.now
-
+        default: Date.now,
+      },
+      returnDate: {
+        type: DataTypes.DATE,
+      },
+      bookId: {
+        type: DataTypes.INTEGER,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+      },
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
-    returnDate: {
-        type: Sequelize.DATE,
-    },
-    bookId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'Books',
-            key: 'id'
-        }
-    },
-    userId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
-    },
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
-}, {
-    modelName: "Reserves",
-    updatedAt: 'updatedAt',
-    createdAt: 'createdAt',
-    hooks: {
-        beforeCount(options) {
-            options.raw = true;
-        }
+    {
+      sequelize,
+      modelName: "Reserve",
+      updatedAt: "updatedAt",
+      createdAt: "createdAt",
     }
-});
+  );
 
-/*     class Reserve extends Model {
-        static associate(models) {
-            models.Reserve.hasOne(models.Book, {
-                foreignKey: "bookId"
-            });
-            models.Reserve.hasOne(models.User, {
-                foreignKey: "userId"
-            });
-        }
-    } */
+  return Reserve;
+};
