@@ -1,4 +1,4 @@
-const User  = require("../models/user");
+const{ User}  = require("../models");
 
 //GET: Search all user.
 exports.findAll = async (req, res) => {

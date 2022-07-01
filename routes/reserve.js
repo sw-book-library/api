@@ -1,6 +1,6 @@
 var router = require("express").Router();
 
-const reserveController = require('../controllers/reserve');
+const reserveController = require("../controllers/reserve");
 
 router.get("/", reserveController.findAll);
 router.get("/:bookId&:userId", reserveController.findByUserOrBook);

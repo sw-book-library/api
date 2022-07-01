@@ -1,4 +1,4 @@
-const Book = require("../models/book");
+const { Book } = require("../models");
 
 //GET: Search all books.
 exports.findAll = async (req, res) => {
@@ -17,8 +17,8 @@ exports.findAll = async (req, res) => {
 exports.findOne = async (req, res) => {
     const { id } = req.params;
     try {
-        const book = await Book.findOne({ 
-            where: { id } 
+        const book = await Book.findOne({
+            where: { id }
         });
 
         if (!!book) {
@@ -36,8 +36,8 @@ exports.findOne = async (req, res) => {
 exports.findByCode = async (req, res) => {
     const { code } = req.params;
     try {
-        const book = await Book.findOne({ 
-            where: { code } 
+        const book = await Book.findOne({
+            where: { code }
         });
 
         if (!!book) {
@@ -65,49 +65,49 @@ exports.create = async (req, res) => {
             active: true,
         });
         res.json(newBook);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.status(500).json(err);
     }
-};   
+};
 
 //PUT: Update book data.
 exports.update = async (req, res) => {
     const { id } = req.params;
     try {
-      const payload = {};
+        const payload = {};
 
-      if (!!req.body.title) {
-          payload.title = req.body.title;
-      }
-      if (!!req.body.productionYear) {
-          payload.productionYear = req.body.productionYear;
-      }
-      if (!!req.body.author) {
-          payload.author = req.body.author;
-      }
-      if (!!req.body.description) {
-          payload.description = req.body.description;
-      }
-      if (!!req.body.active) {
-          payload.active = req.body.active;
-      }
-      if (!!req.body.publishingCompany) {
-          payload.publishingCompany = req.body.publishingCompany;
-      }
-      if (!!req.body.code) {
-          payload.code = req.body.code;
-      }
+        if (!!req.body.title) {
+            payload.title = req.body.title;
+        }
+        if (!!req.body.productionYear) {
+            payload.productionYear = req.body.productionYear;
+        }
+        if (!!req.body.author) {
+            payload.author = req.body.author;
+        }
+        if (!!req.body.description) {
+            payload.description = req.body.description;
+        }
+        if (!!req.body.active) {
+            payload.active = req.body.active;
+        }
+        if (!!req.body.publishingCompany) {
+            payload.publishingCompany = req.body.publishingCompany;
+        }
+        if (!!req.body.code) {
+            payload.code = req.body.code;
+        }
 
-      const updatedBook = await Book.update(payload, {
-          where: { id },
-      });
+        const updatedBook = await Book.update(payload, {
+            where: { id },
+        });
 
-      res.json({ success: !!updatedBook && +updatedBook[0] > 0 });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-}
+        res.json({ success: !!updatedBook && +updatedBook[0] > 0 });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 };
 
 //DELETE: Remove book data.
